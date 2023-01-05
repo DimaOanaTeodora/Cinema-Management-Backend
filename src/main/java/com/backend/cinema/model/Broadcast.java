@@ -1,11 +1,9 @@
 package com.backend.cinema.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name="broadcast")
 public class Broadcast {
 
 	 @Id
