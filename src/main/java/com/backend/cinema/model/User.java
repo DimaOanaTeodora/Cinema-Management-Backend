@@ -1,37 +1,45 @@
 package com.backend.cinema.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 private int id;
-	 
-	 private String email;
-	 
-	 private String lastName;
-	 
-	 private String firstName;
-	 
-	 private String password;
-	 
-	 /*
-	  * @ManyToOne
-    @JoinColumn(name = "artist_id")
-    private Artist artist;
-	  * */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-	public User() {}
+	private String email;
+	private String lastName;
+	private String firstName;
 
-	public User(String email, String lastName, String firstName, String password) {
+	@OneToMany(mappedBy = "user")
+	private List<Reservation> reservations;
+
+	public User() {
+	}
+
+	public User(String email, String lastName, String firstName) {
 		super();
 		this.email = email;
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", lastName=" + lastName + ", firstName=" + firstName + "]";
+	}
+
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public int getId() {
@@ -66,14 +74,4 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
-	 
 }
