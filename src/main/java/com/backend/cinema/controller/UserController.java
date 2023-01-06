@@ -26,18 +26,11 @@ import io.swagger.annotations.*;
 import org.hibernate.usertype.UserType;
 import org.springframework.http.*;
 
-//@RestController
-//@Validated
-//@RequestMapping("/user")
-//
-
-
 @RestController
 @RequestMapping("/users")
 @Api(value = "/users",
         tags = "Users")
 public class UserController {
-	// toate au constructor si response entity
 
 	private UserService userService;
 	private UserMapper userMapper;
@@ -47,14 +40,16 @@ public class UserController {
 		this.userMapper = userMapper;
 	}
 	
-	/*@PostMapping
-    @ApiOperation(value = "Create a User",
-            notes = "Creates a new User based on the information received in the request")
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+    @ApiOperation(value = "Create a user",
+            notes = "Creates a new user based on the information received in the request")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "The User was successfully created based on the received request"),
             @ApiResponse(code = 400, message = "Validation error on the received request")
     })
     public ResponseEntity<User> create(
+    		@Valid
             @RequestBody
             @ApiParam(name = "user", value = "User details", required = true)
                     UserRequest userRequest) {
@@ -63,21 +58,16 @@ public class UserController {
         return ResponseEntity
                 .created(URI.create("/users/" + savedUser.getId()))
                 .body(savedUser);
-    }*/
-	 
-	
-    @PostMapping
-    public ResponseEntity<User> createUser(
-            @Valid
-            @RequestBody UserRequest userRequest) {
-        User user = userMapper.userRequestToUser(userRequest);
-        User createdUser = userService.createUser(user);
-        return ResponseEntity
-                .created(URI.create("/user/" + createdUser.getId()))
-                .body(createdUser);
     }
+	 
 
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE })
+    @ApiOperation(value = "Get details for a user",
+    notes = "Get the details for a user based on the information from the database and the user's id")
+	@ApiResponses(value = {
+	    @ApiResponse(code = 201, message = "The user was found"),
+	    @ApiResponse(code = 404, message = "The user was not found")
+	})
     public User getUser(@PathVariable Integer id) {
         return userService.getUser(id);
     }

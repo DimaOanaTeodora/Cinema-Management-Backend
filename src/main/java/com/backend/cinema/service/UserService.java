@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.backend.cinema.exception.DuplicateUserException;
 import com.backend.cinema.exception.UserNotFoundException;
 import com.backend.cinema.model.User;
 import com.backend.cinema.repository.UserRepository;
@@ -21,6 +22,10 @@ public class UserService {
 	    }
 
 	public User createUser(User user) {
+		 Optional<User> existingUserSameEmail = userRepository.findByEmail(user.getEmail());
+		 existingUserSameEmail.ifPresent(e -> {
+	            throw new DuplicateUserException();
+	        });
 		return userRepository.save(user);
 	}
 

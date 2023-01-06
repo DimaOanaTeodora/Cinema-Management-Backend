@@ -1,5 +1,6 @@
 package com.backend.cinema.repository;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.usertype.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,8 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
 	  @Query(value = "select * from user where first_name = :name", nativeQuery = true)
 	  User findUserByFirstNameWithNativeQuery(String name);
+	  
+	  Optional<User> findByEmail(String email);
 	  
 	  // 1. query from method name
 //	  List<User> findByType(UserType type);

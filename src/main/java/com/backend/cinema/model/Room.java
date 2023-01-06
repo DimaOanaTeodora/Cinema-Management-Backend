@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "room")
 public class Room {
@@ -16,16 +18,17 @@ public class Room {
 	private int capacity;
 
 	@OneToMany(mappedBy = "room")
+	//@JsonIgnore 
 	private List<Seat> seats;
 
 	@OneToMany(mappedBy = "room")
+	@JsonIgnore 
 	private List<Broadcast> broadcasts;
 
 	Room() {
 	}
 
 	public Room(int number, int capacity) {
-		super();
 		this.number = number;
 		this.capacity = capacity;
 	}

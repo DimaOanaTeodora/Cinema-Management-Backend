@@ -8,9 +8,8 @@ import com.backend.cinema.model.User;
 @Component
 public class UserMapper {
 
-	 public User userRequestToUser(UserRequest bankAccountRequest) {
-		 return null;
-	        /*return new User(bankAccountRequest.getAccountNumber(), bankAccountRequest.getBalance(),
-	                bankAccountRequest.getType(), bankAccountRequest.getCardNumber());*/
-	    }
+	public User userRequestToUser(UserRequest userRequest) {
+
+		return new User(userRequest.getEmail(), userRequest.getLastName(), userRequest.getFirstName());
+	}
 }

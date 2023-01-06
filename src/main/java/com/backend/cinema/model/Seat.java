@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "seat")
 public class Seat {
@@ -15,17 +17,18 @@ public class Seat {
 	private int number;
 
 	@ManyToMany
+	@JsonIgnore 
 	private List<Reservation> reserved;
 
 	@ManyToOne
 	@JoinColumn(name = "room_id", nullable = false)
+	@JsonIgnore 
 	private Room room;
 
 	Seat() {
 	}
 
 	public Seat(int number) {
-		super();
 		this.number = number;
 	}
 

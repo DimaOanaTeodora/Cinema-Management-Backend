@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "reservation")
@@ -21,13 +22,16 @@ public class Reservation {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
+	@JsonIgnore 
 	private User user;
 	
 	@ManyToMany
+	@JsonIgnore 
     private List<Seat> reservedSeats;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "broadcast_id", referencedColumnName = "id")
+	@JsonIgnore 
     private Broadcast broadcast;
 
 	Reservation() {

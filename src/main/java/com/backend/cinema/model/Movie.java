@@ -2,6 +2,8 @@ package com.backend.cinema.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -15,13 +17,13 @@ public class Movie {
 	private MovieType type;
 
 	@OneToOne(mappedBy = "movie")
+	@JsonIgnore 
 	private Broadcast broadcast;
 
 	Movie() {
 	}
 
 	public Movie(String name, MovieType type) {
-		super();
 		this.name = name;
 		this.type = type;
 	}

@@ -11,9 +11,11 @@ public class UserRequest {
 	@NotBlank(message = "Email cannot be null")
 	@ApiModelProperty(value = "email", required = true, notes = "The email of the user", example = "oanadima26@gmail.com", position = 1)
 	private String email;
+
 	@NotBlank(message = "Last name cannot be null")
 	@ApiModelProperty(value = "lastName", required = true, notes = "The last name of the user", example = "Dima", position = 2)
 	private String lastName;
+
 	@NotBlank(message = "First name cannot be null")
 	@ApiModelProperty(value = "firstName", required = true, notes = "The first name of the user", example = "Oana-Teodora", position = 3)
 	private String firstName;
@@ -54,29 +56,4 @@ public class UserRequest {
 		this.firstName = firstName;
 	}
 
-//	 @NotBlank(message = "Account number cannot be null")
-//	    private String accountNumber;
-//	    @NotNull
-//	    @Min(0)
-//	    private double balance;
-//	    @NotNull
-//	    private BankAccountType type;
-//	    @Pattern(regexp = VISA_CREDIT_CARD)
-//	    private String cardNumber;
-
-//
-//	@NotBlank
-//    private String accommodation;
-//    @NotNull
-//    @Min(1)
-//    private int duration;
-//    @NotBlank
-//    private String transportation;
-//    @NotNull
-//    @Min(1)
-//    private double price;
-//    @NotNull
-//    private Destination destination;
-
-	// cosntructori cu si fara param
 }

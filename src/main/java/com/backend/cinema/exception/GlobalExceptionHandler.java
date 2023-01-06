@@ -22,6 +22,20 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage() + " at " + LocalDateTime.now());
     }
+    
+    @ExceptionHandler({MovieNotFoundException.class})
+    public ResponseEntity<String> handle(MovieNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
+    
+    @ExceptionHandler({RoomNotFoundException.class})
+    public ResponseEntity<String> handle(RoomNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handle(MethodArgumentNotValidException e) {

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -17,6 +19,7 @@ public class User {
 	private String firstName;
 
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore 
 	private List<Reservation> reservations;
 
 	public User() {

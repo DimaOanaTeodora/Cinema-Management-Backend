@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -26,12 +27,12 @@ public class Schedule {
 	private Date date;
 	
 	@OneToMany(mappedBy="schedule")
+	@JsonIgnore 
     private List<Broadcast> broadcasts;
 
 	Schedule() {}
 
 	public Schedule(LocalTime startingHour, LocalTime endingHour, Date date) {
-		super();
 		this.startingHour = startingHour;
 		this.endingHour = endingHour;
 		this.date = date;
