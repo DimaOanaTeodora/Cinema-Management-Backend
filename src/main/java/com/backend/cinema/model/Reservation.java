@@ -24,12 +24,12 @@ public class Reservation {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@ManyToMany(targetEntity = Seat.class, cascade = CascadeType.ALL)
+	@ManyToMany(targetEntity = Seat.class)//, cascade = CascadeType.ALL)
 	@JoinTable(name = "reserved_seat", joinColumns = { @JoinColumn(name = "reservation_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "seat_id") })
 	private List<Seat> reservedSeats;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "broadcast_id", referencedColumnName = "id")
 	private Broadcast broadcast;
 

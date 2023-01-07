@@ -17,7 +17,7 @@ public class Seat {
 	private int number;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "reservedSeats", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "reservedSeats")//, cascade = CascadeType.ALL)
 	private List<Reservation> reserved;
 
 	@ManyToOne()

@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.cinema.dto.UserRequest;
 import com.backend.cinema.mapper.UserMapper;
+import com.backend.cinema.model.Reservation;
 import com.backend.cinema.model.User;
+import com.backend.cinema.service.ReservationService;
 import com.backend.cinema.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -32,10 +34,13 @@ import org.springframework.http.*;
 public class UserController {
 
 	private UserService userService;
+	private ReservationService reservationService;
+
 	private UserMapper userMapper;
 
-	public UserController(UserService userService, UserMapper userMapper) {
+	public UserController(UserService userService, ReservationService reservationService, UserMapper userMapper) {
 		this.userService = userService;
+		this.reservationService = reservationService;
 		this.userMapper = userMapper;
 	}
 
@@ -58,13 +63,19 @@ public class UserController {
 		return ResponseEntity.ok().body(userService.getUser(id));
 	}
 
-	@DeleteMapping(path="/{id}", produces= {MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Delete a user", notes = "Delete a user by id from the database and it's reservations")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "The user was found"),
 			@ApiResponse(code = 404, message = "The user was not found") })
-	public ResponseEntity<Void> delete(@PathVariable("id") Integer id){
-		userService.deleteUser(id);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-	}
+	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+		List<Reservation> reservations = userService.getReservationByUser(id);
+		for (Reservation value : reservations) {
+			reservationService.deleteReservation(value.getId());
+		}
 
+		userService.deleteUser(id);
+		return ResponseEntity.ok().body("Succesfully deleted");
+	}
+	
+	
 }

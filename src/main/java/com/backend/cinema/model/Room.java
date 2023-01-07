@@ -17,7 +17,7 @@ public class Room {
 	private int number;
 	private int capacity;
 
-	@OneToMany(mappedBy = "room")
+	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL) //this
 	@JsonIgnore 
 	private List<Seat> seats;
 

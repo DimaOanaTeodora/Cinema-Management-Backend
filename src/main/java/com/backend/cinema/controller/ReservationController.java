@@ -77,4 +77,15 @@ public class ReservationController {
 		return ResponseEntity.ok().body(reservationService.getReservation(id));
 	}
 
+	@DeleteMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Cancel a reservation", notes = "Cancel a reservation by id from the database")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "The reservation was found"),
+			@ApiResponse(code = 404, message = "The reservation was not found") })
+	public ResponseEntity<String> delete(@PathVariable("id") Integer id) {
+
+		reservationService.deleteReservation(id);
+
+		return ResponseEntity.ok().body("Succesfully canceled");
+	}
+
 }

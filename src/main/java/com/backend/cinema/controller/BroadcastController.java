@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.backend.cinema.mapper.RoomMapper;
 import com.backend.cinema.mapper.ScheduleMapper;
 import com.backend.cinema.model.Broadcast;
 import com.backend.cinema.model.Movie;
+import com.backend.cinema.model.Reservation;
 import com.backend.cinema.model.Room;
 import com.backend.cinema.model.Schedule;
 import com.backend.cinema.model.Seat;
@@ -44,14 +46,17 @@ public class BroadcastController {
 	private BroadcastService broadcastService;
 	private RoomService roomService;
 	private SeatService seatService;
+	private MovieService movieService;
 
 	private BroadcastMapper broadcastMapper;
 
 	public BroadcastController(BroadcastService broadcastService, RoomService roomService, SeatService seatService,
-			BroadcastMapper broadcastMapper) {
+			MovieService movieService, BroadcastMapper broadcastMapper) {
+		super();
 		this.broadcastService = broadcastService;
 		this.roomService = roomService;
 		this.seatService = seatService;
+		this.movieService = movieService;
 		this.broadcastMapper = broadcastMapper;
 	}
 
@@ -76,6 +81,16 @@ public class BroadcastController {
 			@ApiResponse(code = 404, message = "The broadcast was not found") })
 	public ResponseEntity<Broadcast> getBroadcast(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(broadcastService.getBroadcast(id));
+	}
+
+	@DeleteMapping(path = "/{movieId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Delete a broadcast", notes = "Delete a broadcast by movie id from the database and it's dependencies")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "The broadcast was found"),
+			@ApiResponse(code = 404, message = "The broadcast was not found") })
+	public ResponseEntity<String> delete(@PathVariable Integer movieId) {
+		Movie movie = movieService.getMovie(movieId);
+		broadcastService.deleteBroadcast(movie.getId());
+		return ResponseEntity.ok().body("Succesfully deleted");
 	}
 
 }
