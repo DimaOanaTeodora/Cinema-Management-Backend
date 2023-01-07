@@ -16,14 +16,23 @@ public class RoomService {
 	private RoomRepository roomRepository;
 
 	public RoomService(RoomRepository roomRepository) {
-	        this.roomRepository = roomRepository;
-	    }
+		this.roomRepository = roomRepository;
+	}
+
+	public List<Seat> getSeatsByRoomId(Integer id){
+		Optional<Room> roomOptional = roomRepository.findById(id);
+		if (roomOptional.isPresent()) {
+			return roomOptional.get().getSeats();
+		} else {
+			throw new RoomNotFoundException(id);
+		}
+	}
 
 	public Room saveSeats(List<Seat> seats, Room room) {
 		room.setSeats(seats);
 		return roomRepository.save(room);
 	}
-	
+
 	public Room createRoom(Room room) {
 		return roomRepository.save(room);
 	}

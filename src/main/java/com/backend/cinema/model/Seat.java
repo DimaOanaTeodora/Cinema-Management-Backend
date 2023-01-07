@@ -16,13 +16,13 @@ public class Seat {
 
 	private int number;
 
-	@ManyToMany
-	@JsonIgnore 
+	@JsonIgnore
+	@ManyToMany(mappedBy = "reservedSeats", cascade = CascadeType.ALL)
 	private List<Reservation> reserved;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "room_id", nullable = false)
-	@JsonIgnore 
+	@JsonIgnore
 	private Room room;
 
 	Seat() {

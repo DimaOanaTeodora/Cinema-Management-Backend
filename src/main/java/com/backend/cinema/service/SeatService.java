@@ -18,6 +18,17 @@ public class SeatService {
 	        this.seatRepository = seatRepository;
 	    }
 
+	public List<Seat> getSeatsFromList(List<Integer> seatIds){
+		List<Seat> list = new ArrayList<Seat>();
+		for(Integer id : seatIds) {
+			Optional<Seat> seat = seatRepository.findById(id);
+			if (seat.isPresent()) {
+				list.add( seat.get());
+			} 
+			
+		}
+		return list;
+	}
 	
 	public Seat createSeat(Seat seat) {
 		return seatRepository.save(seat);

@@ -36,6 +36,20 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(e.getMessage() + " at " + LocalDateTime.now());
     }
+    
+    @ExceptionHandler({BroadcastNotFoundException.class})
+    public ResponseEntity<String> handle(BroadcastNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
+    
+    @ExceptionHandler({ScheduleNotFoundException.class})
+    public ResponseEntity<String> handle(ScheduleNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handle(MethodArgumentNotValidException e) {

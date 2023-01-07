@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -13,14 +15,17 @@ public class ScheduleRequest {
 
 	@NotBlank(message = "Starting hour cannot be null")
 	@ApiModelProperty(value = "startingHour", required = true, notes = "The starting hour of the movie", example = "10:00", position = 1)
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime startingHour;
 
 	@NotBlank(message = "Ending hour cannot be null")
 	@ApiModelProperty(value = "endingHour", required = true, notes = "The ending hour of the movie", example = "12:00", position = 2)
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime endingHour;
 
 	@NotBlank(message = "Date cannot be null")
-	@ApiModelProperty(value = "date", required = true, notes = "The date of the movie", example = "05/07/2023", position = 3)
+	@ApiModelProperty(value = "date", required = true, notes = "The date of the movie", example = "05-07-2023", position = 3)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date date;
 
 	public ScheduleRequest() {

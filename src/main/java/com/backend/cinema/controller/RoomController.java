@@ -59,7 +59,15 @@ public class RoomController {
 	@ApiOperation(value = "Get details for a room", notes = "Get the details for a room based on the information from the database and the room's id")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "The room was found"),
 			@ApiResponse(code = 404, message = "The room was not found") })
-	public Room getRoom(@PathVariable Integer id) {
-		return roomService.getRoom(id);
+	public ResponseEntity<Room> getRoom(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(roomService.getRoom(id));
+	}
+	
+	@GetMapping(path = "/{id}/seats", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Get details for a room", notes = "Get the details for a room based on the information from the database and the room's id")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "The room was found"),
+			@ApiResponse(code = 404, message = "The room was not found") })
+	public  ResponseEntity<List<Seat>> getSeats(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(roomService.getSeatsByRoomId(id));
 	}
 }

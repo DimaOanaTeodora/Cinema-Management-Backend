@@ -2,6 +2,8 @@ package com.backend.cinema.model;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "broadcast")
 public class Broadcast {
@@ -10,22 +12,29 @@ public class Broadcast {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "room_id", nullable = false)
 	private Room room;
 
 	@OneToOne(mappedBy = "broadcast")
+	@JsonIgnore 
 	private Reservation reservation;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id", referencedColumnName = "id")
-    private Movie movie;
-	
-	@ManyToOne
-    @JoinColumn(name="schedule_id", nullable=false)
-    private Schedule schedule;
+	@JoinColumn(name = "movie_id", referencedColumnName = "id")
+	private Movie movie;
+
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "schedule_id", nullable = false)
+	private Schedule schedule;
 
 	public Broadcast() {
+	}
+
+	public Broadcast(Room room, Movie movie, Schedule schedule) {
+		this.room = room;
+		this.movie = movie;
+		this.schedule = schedule;
 	}
 
 	public int getId() {

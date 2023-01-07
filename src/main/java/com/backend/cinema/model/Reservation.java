@@ -22,17 +22,16 @@ public class Reservation {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
-	@JsonIgnore 
 	private User user;
-	
-	@ManyToMany
-	@JsonIgnore 
-    private List<Seat> reservedSeats;
-	
+
+	@ManyToMany(targetEntity = Seat.class, cascade = CascadeType.ALL)
+	@JoinTable(name = "reserved_seat", joinColumns = { @JoinColumn(name = "reservation_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "seat_id") })
+	private List<Seat> reservedSeats;
+
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "broadcast_id", referencedColumnName = "id")
-	@JsonIgnore 
-    private Broadcast broadcast;
+	@JoinColumn(name = "broadcast_id", referencedColumnName = "id")
+	private Broadcast broadcast;
 
 	Reservation() {
 	}
@@ -45,6 +44,22 @@ public class Reservation {
 	@Override
 	public String toString() {
 		return "Reservation [id=" + id + ", noPersons=" + noPersons + ", dateRegistered=" + dateRegistered + "]";
+	}
+
+	public List<Seat> getReservedSeats() {
+		return reservedSeats;
+	}
+
+	public void setReservedSeats(List<Seat> reservedSeats) {
+		this.reservedSeats = reservedSeats;
+	}
+
+	public Broadcast getBroadcast() {
+		return broadcast;
+	}
+
+	public void setBroadcast(Broadcast broadcast) {
+		this.broadcast = broadcast;
 	}
 
 	public int getId() {

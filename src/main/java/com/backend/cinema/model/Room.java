@@ -18,7 +18,7 @@ public class Room {
 	private int capacity;
 
 	@OneToMany(mappedBy = "room")
-	//@JsonIgnore 
+	@JsonIgnore 
 	private List<Seat> seats;
 
 	@OneToMany(mappedBy = "room")

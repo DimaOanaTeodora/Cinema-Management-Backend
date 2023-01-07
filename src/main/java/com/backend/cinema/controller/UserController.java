@@ -28,65 +28,43 @@ import org.springframework.http.*;
 
 @RestController
 @RequestMapping("/users")
-@Api(value = "/users",
-        tags = "Users")
+@Api(value = "/users", tags = "Users")
 public class UserController {
 
 	private UserService userService;
 	private UserMapper userMapper;
-	
+
 	public UserController(UserService userService, UserMapper userMapper) {
 		this.userService = userService;
 		this.userMapper = userMapper;
 	}
-	
-	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-			MediaType.APPLICATION_JSON_VALUE })
-    @ApiOperation(value = "Create a user",
-            notes = "Creates a new user based on the information received in the request")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "The User was successfully created based on the received request"),
-            @ApiResponse(code = 400, message = "Validation error on the received request")
-    })
-    public ResponseEntity<User> create(
-    		@Valid
-            @RequestBody
-            @ApiParam(name = "user", value = "User details", required = true)
-                    UserRequest userRequest) {
-        User savedUser = userService.createUser(
-                userMapper.userRequestToUser(userRequest));
-        return ResponseEntity
-                .created(URI.create("/users/" + savedUser.getId()))
-                .body(savedUser);
-    }
-	 
 
-    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE })
-    @ApiOperation(value = "Get details for a user",
-    notes = "Get the details for a user based on the information from the database and the user's id")
+	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Create a user", notes = "Creates a new user based on the information received in the request")
 	@ApiResponses(value = {
-	    @ApiResponse(code = 201, message = "The user was found"),
-	    @ApiResponse(code = 404, message = "The user was not found")
-	})
-    public User getUser(@PathVariable Integer id) {
-        return userService.getUser(id);
-    }
-//
-//    @GetMapping
-//    public List<User> getAllByType(@RequestParam UserType type) {
-//        return userService.getAllByType(type);
-//    }
+			@ApiResponse(code = 201, message = "The User was successfully created based on the received request"),
+			@ApiResponse(code = 400, message = "Validation error on the received request") })
+	public ResponseEntity<User> create(
+			@Valid @RequestBody @ApiParam(name = "user", value = "User details", required = true) UserRequest userRequest) {
+		User savedUser = userService.createUser(userMapper.userRequestToUser(userRequest));
+		return ResponseEntity.created(URI.create("/users/" + savedUser.getId())).body(savedUser);
+	}
 
-//    @GetMapping("/averagebalance/{type}")
-//    public double getUsersAverageBalance(@PathVariable UserType type) {
-//        return userService.getAverageBalance(type);
-//    }
+	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Get details for a user", notes = "Get the details for a user based on the information from the database and the user's id")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "The user was found"),
+			@ApiResponse(code = 404, message = "The user was not found") })
+	public ResponseEntity<User> getUser(@PathVariable Integer id) {
+		return ResponseEntity.ok().body(userService.getUser(id));
+	}
 
-    /*@PutMapping
-    public void makeUserTransfer(
-            @Valid
-            @RequestBody
-            TransferRequest transferRequest) {
-        userService.makeUserTransfer(transferRequest);
-    }*/
+	@DeleteMapping(path="/{id}", produces= {MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Delete a user", notes = "Delete a user by id from the database and it's reservations")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "The user was found"),
+			@ApiResponse(code = 404, message = "The user was not found") })
+	public ResponseEntity<Void> delete(@PathVariable("id") Integer id){
+		userService.deleteUser(id);
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
 }

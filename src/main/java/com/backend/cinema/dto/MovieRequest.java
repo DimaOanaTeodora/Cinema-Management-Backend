@@ -7,8 +7,10 @@ import javax.validation.constraints.NotNull;
 
 import com.backend.cinema.model.MovieType;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel(value = "Movie request", description = "Required details needed to create a new movie")
 public class MovieRequest {
 
 	@NotBlank(message = "Name of the movie cannot be null")

@@ -18,14 +18,14 @@ public class UserService {
 	private UserRepository userRepository;
 
 	public UserService(UserRepository userRepository) {
-	        this.userRepository = userRepository;
-	    }
+		this.userRepository = userRepository;
+	}
 
 	public User createUser(User user) {
-		 Optional<User> existingUserSameEmail = userRepository.findByEmail(user.getEmail());
-		 existingUserSameEmail.ifPresent(e -> {
-	            throw new DuplicateUserException();
-	        });
+		Optional<User> existingUserSameEmail = userRepository.findByEmail(user.getEmail());
+		existingUserSameEmail.ifPresent(e -> {
+			throw new DuplicateUserException();
+		});
 		return userRepository.save(user);
 	}
 
@@ -33,6 +33,15 @@ public class UserService {
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isPresent()) {
 			return userOptional.get();
+		} else {
+			throw new UserNotFoundException(id);
+		}
+	}
+
+	public void deleteUser(Integer id) {
+		Optional<User> userOptional = userRepository.findById(id);
+		if (userOptional.isPresent()) {
+			userRepository.delete(userOptional.get());
 		} else {
 			throw new UserNotFoundException(id);
 		}
@@ -46,9 +55,12 @@ public class UserService {
 //		return userRepository.getAverageBalance(type);
 //	}
 
-	/*@Transactional(propagation = Propagation.MANDATORY)
-	public void makeUserTransfer(TransferRequest transferRequest) {
-		userRepository.modifyBalance(transferRequest.getAmount(), transferRequest.getToUserId());
-		userRepository.modifyBalance(-transferRequest.getAmount(), transferRequest.getFromUserId());
-	}*/
+	/*
+	 * @Transactional(propagation = Propagation.MANDATORY) public void
+	 * makeUserTransfer(TransferRequest transferRequest) {
+	 * userRepository.modifyBalance(transferRequest.getAmount(),
+	 * transferRequest.getToUserId());
+	 * userRepository.modifyBalance(-transferRequest.getAmount(),
+	 * transferRequest.getFromUserId()); }
+	 */
 }
