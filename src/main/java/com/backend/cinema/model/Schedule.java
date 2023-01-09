@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name="schedule")
+@Table(name = "schedule")
 public class Schedule {
 
 	@Id
@@ -23,14 +23,15 @@ public class Schedule {
 	@JsonFormat(pattern = "HH:mm")
 	private LocalTime endingHour;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date date;
-	
-	@OneToMany(mappedBy="schedule")
-	@JsonIgnore 
-    private List<Broadcast> broadcasts;
 
-	Schedule() {}
+	@OneToMany(mappedBy = "schedule")
+	@JsonIgnore
+	private List<Broadcast> broadcasts;
+
+	Schedule() {
+	}
 
 	public Schedule(LocalTime startingHour, LocalTime endingHour, Date date) {
 		this.startingHour = startingHour;
@@ -83,6 +84,5 @@ public class Schedule {
 	public void setBroadcasts(List<Broadcast> broadcasts) {
 		this.broadcasts = broadcasts;
 	}
-	
 
 }

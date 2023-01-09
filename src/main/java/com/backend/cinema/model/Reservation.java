@@ -29,7 +29,7 @@ public class Reservation {
 			@JoinColumn(name = "seat_id") })
 	private List<Seat> reservedSeats;
 
-	@OneToOne//(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "broadcast_id", referencedColumnName = "id")
 	private Broadcast broadcast;
 

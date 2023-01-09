@@ -12,19 +12,19 @@ public class Broadcast {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id", nullable = false)
 	private Room room;
 
 	@OneToOne(mappedBy = "broadcast")
-	@JsonIgnore 
+	@JsonIgnore
 	private Reservation reservation;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
 	private Movie movie;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "schedule_id", nullable = false)
 	private Schedule schedule;
 

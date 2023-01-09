@@ -16,8 +16,11 @@ public class ScheduleService {
 		this.scheduleRepository = scheduleRepository;
 	}
 
-	public Schedule createSchedule(Schedule schedule) {
-		return scheduleRepository.save(schedule);
+	public Schedule updateSchedule(Schedule oldSchedule, Schedule newSchedule) {
+		oldSchedule.setDate(newSchedule.getDate());
+		oldSchedule.setEndingHour(newSchedule.getEndingHour());
+		oldSchedule.setStartingHour(newSchedule.getStartingHour());
+		return scheduleRepository.save(oldSchedule);
 	}
 
 	public Schedule getSchedule(Integer id) {

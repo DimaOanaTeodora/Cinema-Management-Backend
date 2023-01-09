@@ -1,5 +1,6 @@
 package com.backend.cinema.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ public class ReservationService {
 		reservation.setBroadcast(broadcast);
 		reservation.setReservedSeats(seats);
 		return reservationRepository.save(reservation);
+	}
+	
+	public List<Reservation> getAllReservationsByBroadcast(Integer broadcastId) {
+		return reservationRepository.findAllByBroadcastId(broadcastId);
 	}
 
 	public Reservation getReservation(Integer id) {

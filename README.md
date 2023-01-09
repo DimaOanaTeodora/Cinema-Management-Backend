@@ -13,9 +13,9 @@ Documentatie
 9. (done) Vezi toate scaunele pt o camera data dupa id + not found exception
    
 10. (done) Un user face o rezervare la un anumit film, intr-o anumita data, pt un anumit numar de persoane
-11. (filtrare) Un user poate sa vada locurile disponibile pentru un anumit film la o anumita data si ora (adica pt o anumita programare)
+11. (done) filtrare - Un user poate sa vada locurile disponibile pentru un anumit film la o anumita data si ora (adica pt o anumita programare)
 12. (done) Un user poate sa anuleze o rezervare + not found exception 
-13. Porgramul unui film poate fi updatat (data si ora)
+13. (done) Porgramul unui film poate fi updatat (data si ora)
 14. Sala unui film poate fi schimbata
 15. (done) Un anumit film(programare) poate fi sters din lista
 
