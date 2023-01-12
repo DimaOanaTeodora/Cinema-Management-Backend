@@ -1,6 +1,7 @@
 package com.backend.cinema.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -53,6 +54,23 @@ public class RoomController {
 		List<Seat> seats = seatService.createSeats(savedRoom); // create seats
 		savedRoom = roomService.saveSeats(seats, savedRoom); //save seats for room
 		return ResponseEntity.created(URI.create("/rooms/" + savedRoom.getId())).body(savedRoom);
+	}
+	
+	@PostMapping(path = "/all", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Create rooms", notes = "Creates new rooms based on list of rooms received in the request")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "The rooms were successfully created based on the received request"),
+			@ApiResponse(code = 400, message = "Validation error on the received request") })
+	public ResponseEntity<List<Room>> createBulk(
+			@Valid @RequestBody @ApiParam(name = "rooms", value = "List with rooms details", required = true) List<RoomRequest> listRoomRequest) {
+		List<Room> createdRooms = new ArrayList<Room>();
+		for(RoomRequest roomRequest : listRoomRequest) {
+			Room savedRoom = roomService.createRoom(roomMapper.roomRequestToRoom(roomRequest)); // create room
+			List<Seat> seats = seatService.createSeats(savedRoom); // create seats
+			savedRoom = roomService.saveSeats(seats, savedRoom); 
+			createdRooms.add(savedRoom);
+		}
+		return ResponseEntity.ok().body(createdRooms);
 	}
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

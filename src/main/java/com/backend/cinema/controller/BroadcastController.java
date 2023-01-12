@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.cinema.dto.BroadcastRequest;
+import com.backend.cinema.dto.ScheduleRequest;
 import com.backend.cinema.mapper.BroadcastMapper;
 import com.backend.cinema.mapper.MovieMapper;
 import com.backend.cinema.mapper.RoomMapper;
@@ -45,34 +47,44 @@ public class BroadcastController {
 
 	private BroadcastService broadcastService;
 	private RoomService roomService;
-	private SeatService seatService;
 	private MovieService movieService;
 
 	private BroadcastMapper broadcastMapper;
 
-	public BroadcastController(BroadcastService broadcastService, RoomService roomService, SeatService seatService,
-			MovieService movieService, BroadcastMapper broadcastMapper) {
-		super();
+	public BroadcastController(BroadcastService broadcastService, RoomService roomService, MovieService movieService,
+			BroadcastMapper broadcastMapper) {
 		this.broadcastService = broadcastService;
 		this.roomService = roomService;
-		this.seatService = seatService;
 		this.movieService = movieService;
 		this.broadcastMapper = broadcastMapper;
 	}
 
-	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	@PostMapping(path = "/{roomId}/{movieId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Create a broadcast", notes = "Creates a new broadcast based on the information received in the request")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "The Broadcast was successfully created based on the received request"),
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
-	public ResponseEntity<Broadcast> create(
+	public ResponseEntity<Broadcast> create(@PathVariable Integer roomId, @PathVariable Integer movieId,
 			@Valid @RequestBody @ApiParam(name = "broadcast", value = "Broadcast details", required = true) BroadcastRequest broadcastRequest) {
-
+		Room room = roomService.getRoom(roomId);
+		Movie movie = movieService.getMovie(movieId);
 		Broadcast savedBroadcast = broadcastService
-				.createBroadcast(broadcastMapper.broadcastRequestToBroadcast(broadcastRequest));
-		List<Seat> seats = seatService.createSeats(savedBroadcast.getRoom()); // create seats
-		Room savedRoom = roomService.saveSeats(seats, savedBroadcast.getRoom()); // save seats for room
+				.createBroadcast(broadcastMapper.broadcastRequestToBroadcast(broadcastRequest), room, movie);
+
 		return ResponseEntity.created(URI.create("/broadcasts/" + savedBroadcast.getId())).body(savedBroadcast);
+	}
+
+	@PutMapping(path = "/{broadcastId}/{newRoomId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Update the room for a broadcast", notes = "Update the room for a broadcast based by room id")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "The broadcast was successfully updated based on the received request") })
+	public ResponseEntity<Broadcast> create(@PathVariable Integer broadcastId, @PathVariable Integer newRoomId) {
+
+		Room newRoom = roomService.getRoom(newRoomId);
+		Broadcast savedBroadcast = broadcastService.updateBroadcast(broadcastService.getBroadcast(broadcastId),
+				newRoom);
+		return ResponseEntity.created(URI.create("/schedules/" + savedBroadcast.getId())).body(savedBroadcast);
 	}
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

@@ -10,10 +10,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "Room request", description = "Required details needed to create a new room")
 public class RoomRequest {
 
-	@NotNull(message = "Number cannot be null")
-	@Min(1)
-	@ApiModelProperty(value = "number", required = true, notes = "The number of the room", example = "123", position = 1)
-	private int number;
+	@NotBlank(message = "Name cannot be null")
+	@ApiModelProperty(value = "name", required = true, notes = "The name of the room", example = "1A", position = 1)
+	private String name;
 
 	@NotNull(message = "Capacity cannot be null")
 	@Min(1)
@@ -23,18 +22,19 @@ public class RoomRequest {
 	public RoomRequest() {
 	}
 
-	public RoomRequest(@NotNull(message = "Number cannot be null") @Min(1) int number,
+	public RoomRequest(@NotBlank(message = "Name cannot be null") String name,
 			@NotNull(message = "Capacity cannot be null") @Min(1) int capacity) {
-		this.number = number;
+		super();
+		this.name = name;
 		this.capacity = capacity;
 	}
 
-	public int getNumber() {
-		return number;
+	public String getName() {
+		return name;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getCapacity() {

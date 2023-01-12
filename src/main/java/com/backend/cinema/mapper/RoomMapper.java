@@ -10,6 +10,6 @@ public class RoomMapper {
 
 	public Room roomRequestToRoom(RoomRequest roomRequest) {
 
-		return new Room(roomRequest.getNumber(), roomRequest.getCapacity());
+		return new Room(roomRequest.getName(), roomRequest.getCapacity());
 	}
 }

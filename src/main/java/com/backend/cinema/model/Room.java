@@ -14,28 +14,29 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private int number;
+	private String name;
 	private int capacity;
 
-	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL) //this
-	@JsonIgnore 
+	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL) // this
+	@JsonIgnore
 	private List<Seat> seats;
 
 	@OneToMany(mappedBy = "room")
-	@JsonIgnore 
+	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
 	Room() {
 	}
 
-	public Room(int number, int capacity) {
-		this.number = number;
+	public Room(String name, int capacity) {
+		super();
+		this.name = name;
 		this.capacity = capacity;
 	}
 
 	@Override
 	public String toString() {
-		return "Room [id=" + id + ", number=" + number + ", capacity=" + capacity + "]";
+		return "Room [id=" + id + ", name=" + name + ", capacity=" + capacity + "]";
 	}
 
 	public int getId() {
@@ -46,12 +47,12 @@ public class Room {
 		this.id = id;
 	}
 
-	public int getNumber() {
-		return number;
+	public String getName() {
+		return name;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getCapacity() {

@@ -1,5 +1,7 @@
-# Platforma de management rezervari cinema
+# Platforma pentru management-ul rezervarilor la cinema
 Documentatie
+
+# MySQL database - Baza de date - entitati
 
 # Business requirmentes
 1. (done) Un user isi poate crea un cont pe baza numelui complet si al emailului + duplicate exception
@@ -16,7 +18,30 @@ Documentatie
 11. (done) filtrare - Un user poate sa vada locurile disponibile pentru un anumit film la o anumita data si ora (adica pt o anumita programare)
 12. (done) Un user poate sa anuleze o rezervare + not found exception 
 13. (done) Porgramul unui film poate fi updatat (data si ora)
-14. Sala unui film poate fi schimbata
+14. (done) Sala unei programari a unui film poate fi schimbata
 15. (done) Un anumit film(programare) poate fi sters din lista
+16. (done) Se pot adauga sali in baza de date sub forma unei liste de sali
+17. (done) Se pot adauga filme in baza de date sub forma unei liste de filme
 
+# REST ENDPOINTS - CRUD
+## CREATE
+## UPDATE
+## GET
+## DELETE
+
+# Testing
+
+# Controllers 
+
+# Services
+
+# Repositories
+
+# Model mapper 
+
+# DTOs
+
+# Exception Handling
+
+# SWARM DOCS
 

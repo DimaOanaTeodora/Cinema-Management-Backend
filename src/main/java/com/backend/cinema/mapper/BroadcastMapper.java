@@ -8,20 +8,14 @@ import com.backend.cinema.model.Broadcast;
 @Component
 public class BroadcastMapper {
 
-	private RoomMapper roomMapper;// = new RoomMapper();
-	private MovieMapper movieMapper; // = new MovieMapper();
-	private ScheduleMapper scheduleMapper; // = new ScheduleMapper();
+	private ScheduleMapper scheduleMapper;
 
-	public BroadcastMapper(RoomMapper roomMapper, MovieMapper movieMapper, ScheduleMapper scheduleMapper) {
-		this.roomMapper = roomMapper;
-		this.movieMapper = movieMapper;
+	public BroadcastMapper(ScheduleMapper scheduleMapper) {
 		this.scheduleMapper = scheduleMapper;
 	}
 
 	public Broadcast broadcastRequestToBroadcast(BroadcastRequest broadcastRequest) {
 
-		return new Broadcast(roomMapper.roomRequestToRoom(broadcastRequest.getRoom()),
-				movieMapper.movieRequestToMovie(broadcastRequest.getMovie()),
-				scheduleMapper.scheduleRequestToSchedule(broadcastRequest.getSchedule()));
+		return new Broadcast(scheduleMapper.scheduleRequestToSchedule(broadcastRequest.getSchedule()));
 	}
 }

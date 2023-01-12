@@ -44,7 +44,7 @@ public class ScheduleController {
 			MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Update a schedule", notes = "Update a schedule based on a broadcast id")
 	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "The schedule was successfully created based on the received request"),
+			@ApiResponse(code = 201, message = "The schedule was successfully updated based on the received request"),
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<Schedule> create(@PathVariable Integer broadcastId,
 			@Valid @RequestBody @ApiParam(name = "schedule", value = "Schedule details", required = true) ScheduleRequest scheduleRequest) {

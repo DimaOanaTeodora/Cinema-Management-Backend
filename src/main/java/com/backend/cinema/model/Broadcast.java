@@ -31,9 +31,7 @@ public class Broadcast {
 	public Broadcast() {
 	}
 
-	public Broadcast(Room room, Movie movie, Schedule schedule) {
-		this.room = room;
-		this.movie = movie;
+	public Broadcast(Schedule schedule) {
 		this.schedule = schedule;
 	}
 

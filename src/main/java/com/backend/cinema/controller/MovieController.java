@@ -1,6 +1,8 @@
 package com.backend.cinema.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -14,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.cinema.dto.MovieRequest;
+import com.backend.cinema.dto.RoomRequest;
 import com.backend.cinema.mapper.MovieMapper;
 import com.backend.cinema.model.Movie;
+import com.backend.cinema.model.Room;
+import com.backend.cinema.model.Seat;
 import com.backend.cinema.service.MovieService;
 
 import io.swagger.annotations.Api;
@@ -46,6 +51,22 @@ public class MovieController {
 			@Valid @RequestBody @ApiParam(name = "movie", value = "Movie details", required = true) MovieRequest movieRequest) {
 		Movie savedMovie = movieService.createMovie(movieMapper.movieRequestToMovie(movieRequest));
 		return ResponseEntity.created(URI.create("/movies/" + savedMovie.getId())).body(savedMovie);
+	}
+
+	@PostMapping(path = "/all", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	@ApiOperation(value = "Create movies", notes = "Creates new movies based on list of movies received in the request")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "The movies were successfully created based on the received request"),
+			@ApiResponse(code = 400, message = "Validation error on the received request") })
+	public ResponseEntity<List<Movie>> createBulk(
+			@Valid @RequestBody @ApiParam(name = "movies", value = "List with movies details", required = true) List<MovieRequest> listMovieRequest) {
+		List<Movie> createdMovies = new ArrayList<Movie>();
+		for (MovieRequest movieRequest : listMovieRequest) {
+			Movie savedMovie = movieService.createMovie(movieMapper.movieRequestToMovie(movieRequest));
+			createdMovies.add(savedMovie);
+		}
+		return ResponseEntity.ok().body(createdMovies);
 	}
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
