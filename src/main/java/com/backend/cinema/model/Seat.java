@@ -25,7 +25,7 @@ public class Seat {
 	@JsonIgnore
 	private Room room;
 
-	Seat() {
+	public Seat() {
 	}
 
 	public Seat(int number) {

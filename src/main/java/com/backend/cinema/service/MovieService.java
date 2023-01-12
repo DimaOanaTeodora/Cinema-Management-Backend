@@ -14,8 +14,8 @@ public class MovieService {
 	private MovieRepository movieRepository;
 
 	public MovieService(MovieRepository movieRepository) {
-	        this.movieRepository = movieRepository;
-	    }
+		this.movieRepository = movieRepository;
+	}
 
 	public Movie createMovie(Movie movie) {
 		return movieRepository.save(movie);

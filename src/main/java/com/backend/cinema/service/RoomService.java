@@ -19,15 +19,6 @@ public class RoomService {
 		this.roomRepository = roomRepository;
 	}
 
-	public List<Seat> getSeatsByRoomId(Integer id){
-		Optional<Room> roomOptional = roomRepository.findById(id);
-		if (roomOptional.isPresent()) {
-			return roomOptional.get().getSeats();
-		} else {
-			throw new RoomNotFoundException(id);
-		}
-	}
-
 	public Room saveSeats(List<Seat> seats, Room room) {
 		room.setSeats(seats);
 		return roomRepository.save(room);
@@ -36,7 +27,6 @@ public class RoomService {
 	public Room createRoom(Room room) {
 		return roomRepository.save(room);
 	}
-	
 
 	public Room getRoom(Integer id) {
 		Optional<Room> roomOptional = roomRepository.findById(id);

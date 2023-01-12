@@ -1,10 +1,10 @@
-# Platforma pentru management-ul rezervarilor la cinema
+# :cinema: Platforma pentru management-ul rezervarilor la cinema 
 Documentatie
 
-# MySQL database - Baza de date - entitati
+## :clipboard: MySQL database - Baza de date - entitati
 ![DB schema](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/DB.png?raw=true)
 
-# Business requirmentes
+## :briefcase: Business requirmentes/ Functionalitati
 1. (done) Un user isi poate crea un cont pe baza numelui complet si al emailului + duplicate exception
 2. (done) Pot fi vizualizate informatiile unui user dupa id + not found exception
 3. (done) Pot adauga un film 
@@ -24,25 +24,25 @@ Documentatie
 16. (done) Se pot adauga sali in baza de date sub forma unei liste de sali
 17. (done) Se pot adauga filme in baza de date sub forma unei liste de filme
 
-# REST ENDPOINTS - CRUD
-## CREATE
-## UPDATE
-## GET
-## DELETE
+## :pushpin: REST ENDPOINTS - CRUD
+### CREATE
+### UPDATE
+### GET
+### DELETE
 
-# Testing
+## :next_track_button: Testing
 
-# Controllers 
+## Controllers 
 
-# Services
+## Services
 
-# Repositories
+## Repositories
 
-# Model mapper 
+## Model mapper 
 
-# DTOs
+## DTOs
 
-# Exception Handling
+## :exclamation: Exception Handling
 
-# SWARM DOCS
+## :high_brightness: SWARM DOCS
 

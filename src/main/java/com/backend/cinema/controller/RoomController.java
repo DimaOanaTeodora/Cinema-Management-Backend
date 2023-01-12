@@ -49,14 +49,15 @@ public class RoomController {
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<Room> create(
 			@Valid @RequestBody @ApiParam(name = "room", value = "Room details", required = true) RoomRequest roomRequest) {
-		
+
 		Room savedRoom = roomService.createRoom(roomMapper.roomRequestToRoom(roomRequest)); // create room
 		List<Seat> seats = seatService.createSeats(savedRoom); // create seats
-		savedRoom = roomService.saveSeats(seats, savedRoom); //save seats for room
+		savedRoom = roomService.saveSeats(seats, savedRoom); // save seats for room
 		return ResponseEntity.created(URI.create("/rooms/" + savedRoom.getId())).body(savedRoom);
 	}
-	
-	@PostMapping(path = "/all", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+
+	@PostMapping(path = "/all", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Create rooms", notes = "Creates new rooms based on list of rooms received in the request")
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "The rooms were successfully created based on the received request"),
@@ -64,10 +65,10 @@ public class RoomController {
 	public ResponseEntity<List<Room>> createBulk(
 			@Valid @RequestBody @ApiParam(name = "rooms", value = "List with rooms details", required = true) List<RoomRequest> listRoomRequest) {
 		List<Room> createdRooms = new ArrayList<Room>();
-		for(RoomRequest roomRequest : listRoomRequest) {
+		for (RoomRequest roomRequest : listRoomRequest) {
 			Room savedRoom = roomService.createRoom(roomMapper.roomRequestToRoom(roomRequest)); // create room
 			List<Seat> seats = seatService.createSeats(savedRoom); // create seats
-			savedRoom = roomService.saveSeats(seats, savedRoom); 
+			savedRoom = roomService.saveSeats(seats, savedRoom);
 			createdRooms.add(savedRoom);
 		}
 		return ResponseEntity.ok().body(createdRooms);
@@ -79,13 +80,5 @@ public class RoomController {
 			@ApiResponse(code = 404, message = "The room was not found") })
 	public ResponseEntity<Room> getRoom(@PathVariable Integer id) {
 		return ResponseEntity.ok().body(roomService.getRoom(id));
-	}
-	
-	@GetMapping(path = "/{id}/seats", produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ApiOperation(value = "Get details for a room", notes = "Get the details for a room based on the information from the database and the room's id")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "The room was found"),
-			@ApiResponse(code = 404, message = "The room was not found") })
-	public  ResponseEntity<List<Seat>> getSeats(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(roomService.getSeatsByRoomId(id));
 	}
 }

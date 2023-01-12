@@ -1,4 +1,4 @@
-package com.backend.cinema;
+package com.backend.cinema.service;
 
 public class MovieServiceTest {
 

@@ -22,7 +22,7 @@ public class BroadcastService {
 	public BroadcastService(BroadcastRepository broadcastRepository) {
 		this.broadcastRepository = broadcastRepository;
 	}
-	
+
 	public Broadcast updateBroadcast(Broadcast oldBroadcast, Room newRoom) {
 		oldBroadcast.setRoom(newRoom);
 		return broadcastRepository.save(oldBroadcast);

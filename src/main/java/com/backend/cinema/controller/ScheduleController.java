@@ -34,7 +34,8 @@ public class ScheduleController {
 
 	private ScheduleMapper scheduleMapper;
 
-	public ScheduleController(ScheduleService scheduleService, BroadcastService broadcastService, ScheduleMapper scheduleMapper) {
+	public ScheduleController(ScheduleService scheduleService, BroadcastService broadcastService,
+			ScheduleMapper scheduleMapper) {
 		this.scheduleService = scheduleService;
 		this.broadcastService = broadcastService;
 		this.scheduleMapper = scheduleMapper;
@@ -49,10 +50,9 @@ public class ScheduleController {
 	public ResponseEntity<Schedule> create(@PathVariable Integer broadcastId,
 			@Valid @RequestBody @ApiParam(name = "schedule", value = "Schedule details", required = true) ScheduleRequest scheduleRequest) {
 		Broadcast broadcast = broadcastService.getBroadcast(broadcastId);
-		Schedule savedSchedule = scheduleService
-				.updateSchedule(broadcast.getSchedule(), scheduleMapper.scheduleRequestToSchedule(scheduleRequest));
+		Schedule savedSchedule = scheduleService.updateSchedule(broadcast.getSchedule(),
+				scheduleMapper.scheduleRequestToSchedule(scheduleRequest));
 		return ResponseEntity.created(URI.create("/schedules/" + savedSchedule.getId())).body(savedSchedule);
 	}
-
 
 }

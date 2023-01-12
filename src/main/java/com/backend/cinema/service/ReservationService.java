@@ -28,7 +28,7 @@ public class ReservationService {
 		reservation.setReservedSeats(seats);
 		return reservationRepository.save(reservation);
 	}
-	
+
 	public List<Reservation> getAllReservationsByBroadcast(Integer broadcastId) {
 		return reservationRepository.findAllByBroadcastId(broadcastId);
 	}
@@ -50,7 +50,5 @@ public class ReservationService {
 			throw new ReservationNotFoundException(id);
 		}
 	}
-	
-	
-	
+
 }

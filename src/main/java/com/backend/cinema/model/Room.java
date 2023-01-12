@@ -17,8 +17,8 @@ public class Room {
 	private String name;
 	private int capacity;
 
-	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL) // this
-	@JsonIgnore
+	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL) 
+	//@JsonIgnore
 	private List<Seat> seats;
 
 	@OneToMany(mappedBy = "room")

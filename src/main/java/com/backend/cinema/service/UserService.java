@@ -48,7 +48,7 @@ public class UserService {
 			throw new UserNotFoundException(id);
 		}
 	}
-	
+
 	public List<Reservation> getReservationByUser(Integer id) {
 		Optional<User> userOptional = userRepository.findById(id);
 		if (userOptional.isPresent()) {

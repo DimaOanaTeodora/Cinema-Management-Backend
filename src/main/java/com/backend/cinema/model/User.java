@@ -24,6 +24,17 @@ public class User {
 
 	public User() {
 	}
+	
+	
+
+	public User(int id, String email, String lastName, String firstName) {
+		this.id = id;
+		this.email = email;
+		this.lastName = lastName;
+		this.firstName = firstName;
+	}
+
+
 
 	public User(String email, String lastName, String firstName) {
 		super();
