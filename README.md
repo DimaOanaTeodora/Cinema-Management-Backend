@@ -2,6 +2,7 @@
 Documentatie
 
 # MySQL database - Baza de date - entitati
+![DB schema](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/DB.png?raw=true)
 
 # Business requirmentes
 1. (done) Un user isi poate crea un cont pe baza numelui complet si al emailului + duplicate exception
