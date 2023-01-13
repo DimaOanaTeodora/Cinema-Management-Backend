@@ -49,4 +49,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.firstName").value(request.getFirstName()))
                 .andExpect(jsonPath("$.email").value(request.getEmail()));
     }
+    
+
 }

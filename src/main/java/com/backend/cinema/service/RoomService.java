@@ -28,10 +28,10 @@ public class RoomService {
 		return roomRepository.save(room);
 	}
 
-	public Room getRoom(Integer id) {
+	public Optional<Room> getRoom(Integer id) {
 		Optional<Room> roomOptional = roomRepository.findById(id);
 		if (roomOptional.isPresent()) {
-			return roomOptional.get();
+			return roomOptional;
 		} else {
 			throw new RoomNotFoundException(id);
 		}

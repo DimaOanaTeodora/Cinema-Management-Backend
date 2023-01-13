@@ -20,7 +20,7 @@ public class Movie {
 	@JsonIgnore 
 	private Broadcast broadcast;
 
-	Movie() {
+	public Movie() {
 	}
 
 	public Movie(String name, MovieType type) {

@@ -1,7 +1,6 @@
 package com.backend.cinema.controller;
 
 import java.net.URI;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -17,22 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.cinema.dto.BroadcastRequest;
-import com.backend.cinema.dto.ScheduleRequest;
 import com.backend.cinema.mapper.BroadcastMapper;
-import com.backend.cinema.mapper.MovieMapper;
-import com.backend.cinema.mapper.RoomMapper;
-import com.backend.cinema.mapper.ScheduleMapper;
+
 import com.backend.cinema.model.Broadcast;
 import com.backend.cinema.model.Movie;
-import com.backend.cinema.model.Reservation;
 import com.backend.cinema.model.Room;
-import com.backend.cinema.model.Schedule;
-import com.backend.cinema.model.Seat;
 import com.backend.cinema.service.BroadcastService;
 import com.backend.cinema.service.MovieService;
 import com.backend.cinema.service.RoomService;
-import com.backend.cinema.service.ScheduleService;
-import com.backend.cinema.service.SeatService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -67,7 +58,7 @@ public class BroadcastController {
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<Broadcast> create(@PathVariable Integer roomId, @PathVariable Integer movieId,
 			@Valid @RequestBody @ApiParam(name = "broadcast", value = "Broadcast details", required = true) BroadcastRequest broadcastRequest) {
-		Room room = roomService.getRoom(roomId);
+		Room room = roomService.getRoom(roomId).get();
 		Movie movie = movieService.getMovie(movieId);
 		Broadcast savedBroadcast = broadcastService
 				.createBroadcast(broadcastMapper.broadcastRequestToBroadcast(broadcastRequest), room, movie);
@@ -81,8 +72,8 @@ public class BroadcastController {
 			@ApiResponse(code = 201, message = "The broadcast was successfully updated based on the received request") })
 	public ResponseEntity<Broadcast> create(@PathVariable Integer broadcastId, @PathVariable Integer newRoomId) {
 
-		Room newRoom = roomService.getRoom(newRoomId);
-		Broadcast savedBroadcast = broadcastService.updateBroadcast(broadcastService.getBroadcast(broadcastId),
+		Room newRoom = roomService.getRoom(newRoomId).get();
+		Broadcast savedBroadcast = broadcastService.updateBroadcastRoom(broadcastService.getBroadcast(broadcastId),
 				newRoom);
 		return ResponseEntity.created(URI.create("/schedules/" + savedBroadcast.getId())).body(savedBroadcast);
 	}

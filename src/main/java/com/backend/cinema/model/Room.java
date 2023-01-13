@@ -25,7 +25,7 @@ public class Room {
 	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
-	Room() {
+	public Room() {
 	}
 
 	public Room(String name, int capacity) {

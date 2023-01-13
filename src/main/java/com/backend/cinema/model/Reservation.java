@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "reservation")
@@ -33,7 +32,7 @@ public class Reservation {
 	@JoinColumn(name = "broadcast_id", referencedColumnName = "id")
 	private Broadcast broadcast;
 
-	Reservation() {
+	public Reservation() {
 	}
 
 	public Reservation(Integer noPersons, Date dateRegistered) {

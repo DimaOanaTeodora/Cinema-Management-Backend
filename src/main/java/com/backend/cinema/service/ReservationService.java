@@ -1,13 +1,11 @@
 package com.backend.cinema.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.backend.cinema.exception.ReservationNotFoundException;
-import com.backend.cinema.exception.UserNotFoundException;
 import com.backend.cinema.model.Broadcast;
 import com.backend.cinema.model.Reservation;
 import com.backend.cinema.model.Seat;

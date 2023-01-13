@@ -5,10 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +44,6 @@ public class ReservationController {
 
 	public ReservationController(ReservationService reservationService, UserService userService,
 			BroadcastService broadcastService, SeatService seatService, ReservationMapper reservationMapper) {
-		super();
 		this.reservationService = reservationService;
 		this.userService = userService;
 		this.broadcastService = broadcastService;

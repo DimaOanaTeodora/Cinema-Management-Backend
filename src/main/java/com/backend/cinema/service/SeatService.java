@@ -56,10 +56,10 @@ public class SeatService {
 		return dictionary;
 	}
 
-	public Seat getSeat(Integer id) {
+	public Optional<Seat> getSeat(Integer id) {
 		Optional<Seat> seatOptional = seatRepository.findById(id);
 		if (seatOptional.isPresent()) {
-			return seatOptional.get();
+			return seatOptional;
 		} else {
 			return null;
 		}

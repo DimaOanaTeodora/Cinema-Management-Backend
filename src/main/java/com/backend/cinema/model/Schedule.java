@@ -30,7 +30,7 @@ public class Schedule {
 	@JsonIgnore
 	private List<Broadcast> broadcasts;
 
-	Schedule() {
+	public Schedule() {
 	}
 
 	public Schedule(LocalTime startingHour, LocalTime endingHour, Date date) {

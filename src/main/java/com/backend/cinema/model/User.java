@@ -19,13 +19,11 @@ public class User {
 	private String firstName;
 
 	@OneToMany(mappedBy = "user")
-	@JsonIgnore 
+	@JsonIgnore
 	private List<Reservation> reservations;
 
 	public User() {
 	}
-	
-	
 
 	public User(int id, String email, String lastName, String firstName) {
 		this.id = id;
@@ -33,8 +31,6 @@ public class User {
 		this.lastName = lastName;
 		this.firstName = firstName;
 	}
-
-
 
 	public User(String email, String lastName, String firstName) {
 		super();

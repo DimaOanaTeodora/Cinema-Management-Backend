@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.cinema.dto.MovieRequest;
-import com.backend.cinema.dto.RoomRequest;
 import com.backend.cinema.mapper.MovieMapper;
 import com.backend.cinema.model.Movie;
-import com.backend.cinema.model.Room;
-import com.backend.cinema.model.Seat;
 import com.backend.cinema.service.MovieService;
 
 import io.swagger.annotations.Api;

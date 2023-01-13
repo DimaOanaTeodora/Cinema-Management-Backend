@@ -79,6 +79,6 @@ public class RoomController {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "The room was found"),
 			@ApiResponse(code = 404, message = "The room was not found") })
 	public ResponseEntity<Room> getRoom(@PathVariable Integer id) {
-		return ResponseEntity.ok().body(roomService.getRoom(id));
+		return ResponseEntity.ok().body(roomService.getRoom(id).get());
 	}
 }

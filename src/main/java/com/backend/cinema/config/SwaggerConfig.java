@@ -1,6 +1,5 @@
 package com.backend.cinema.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -16,21 +15,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.backend.cinema.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
-    }
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.OAS_30).select()
+				.apis(RequestHandlerSelectors.basePackage("com.backend.cinema.controller")).paths(PathSelectors.any())
+				.build().apiInfo(apiInfo());
+	}
 
-    @Bean
-    public ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Cinema API Documentation")
-                .description("API Documentation for all available operations")
-                .build();
-    }
+	@Bean
+	public ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Cinema API Documentation")
+				.description("API Documentation for all available operations").build();
+	}
 }

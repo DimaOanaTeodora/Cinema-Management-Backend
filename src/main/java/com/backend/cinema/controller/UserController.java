@@ -1,7 +1,6 @@
 package com.backend.cinema.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +24,6 @@ import java.util.*;
 
 import io.swagger.annotations.*;
 
-import org.hibernate.usertype.UserType;
 import org.springframework.http.*;
 
 @RestController

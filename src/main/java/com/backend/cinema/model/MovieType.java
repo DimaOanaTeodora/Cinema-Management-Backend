@@ -1,5 +1,5 @@
 package com.backend.cinema.model;
 
 public enum MovieType {
- D2, D3
+	D2, D3
 }
