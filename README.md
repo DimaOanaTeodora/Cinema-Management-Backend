@@ -7,7 +7,7 @@ Documentatie
 ## :briefcase: Business requirmentes/ Functionalitati
 TODO la stergerea unei programari sa nu stearga camere si filmele 
 
-## :pushpin: REST ENDPOINTS - CRUD
+## :briefcase: REST ENDPOINTS - CRUD - Functionalitati
 ### CREATE
 1. Adaugare film
 2. Adaugare filme printr-un JSON cu o lista de filme
@@ -32,12 +32,145 @@ TODO la stergerea unei programari sa nu stearga camere si filmele
 3. Stergerea unei programari a unui film
    
 ## :next_track_button: Testing
+Code coverage total obtinut 70.6%
 
+![Tests](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/test.png?raw=true)
+
+Au fost create atat teste de integrare pentru controllers cat si unit teste pentru servicii.
+
+Testele de integrare au fost facute pentru *UserController* si *ScheduleController* acoperind cate o functionalitate CRUD.
+```Java
+@WebMvcTest(controllers = UserController.class) // this tells Spring Boot to auto-configure a Spring web context
+												// for integration tests for the UserController class
+public class UserControllerTest {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Autowired
+	private ObjectMapper objectMapper;
+	@MockBean
+	private UserService userService;
+	@MockBean
+	private ReservationService resevrationService;
+	@MockBean
+	private UserMapper userMapper;
+
+	@Test
+	public void createUser() throws Exception {
+		UserRequest request = new UserRequest("oanadima26@gmail.com", "Dima", "Oana-Teodora");
+
+		when(userService.createUser(any())).thenReturn(new User(1, "oanadima26@gmail.com", "Dima", "Oana-Teodora"));
+
+		mockMvc.perform(
+				post("/users").contentType("application/json").content(objectMapper.writeValueAsString(request)))
+				.andExpect(status().isCreated()).andExpect(jsonPath("$.lastName").value(request.getLastName()))
+				.andExpect(jsonPath("$.firstName").value(request.getFirstName()))
+				.andExpect(jsonPath("$.email").value(request.getEmail()));
+	}
+    ...
+}
+```
+
+Unit testele acopera marea majoritate a functionalitatilor din serviciile folosite.
+```Java
+@ExtendWith(MockitoExtension.class)
+public class RoomServiceTest {
+
+	@InjectMocks
+	private RoomService roomService;
+
+	@Mock
+	private RoomRepository roomRepository;
+	
+	...
+
+	@Test
+	void whenRoomDoesntExists_getRoom_throwsRoomNotFoundException() {
+
+		// Act
+		RoomNotFoundException exception = assertThrows(RoomNotFoundException.class, () -> roomService.getRoom(1));
+
+		// Assert
+		assertEquals("Room with id 1 doesn't exist ", exception.getMessage());
+
+	}
+    ...
+}
+```
 ## Controllers 
-
+Exista 7 controllere create cate una pentru fiecare entitate in parte.
+- UserController /users
+- ScheduleController /schedules
+- MovieController /movies
+- RoomController /rooms
+- SeatController /seats
+- BroadcastController /broadcasts
+- ReservationController /reservations
+  
 ## Services
+Exista 7 servicii create cate una pentru fiecare entitate in parte.
+- UserService 
+- ScheduleService 
+- MovieService 
+- RoomService  
+- SeatService  
+- BroadcastService  
+- ReservationService  
+  
+```Java 
+@Service
+public class BroadcastService {
 
+	private BroadcastRepository broadcastRepository;
+
+	public BroadcastService(BroadcastRepository broadcastRepository) {
+		this.broadcastRepository = broadcastRepository;
+	}
+
+	public Broadcast updateBroadcastRoom(Broadcast oldBroadcast, Room newRoom) {
+		oldBroadcast.setRoom(newRoom);
+		return broadcastRepository.save(oldBroadcast);
+	}
+
+	public Broadcast createBroadcast(Broadcast broadcast, Room room, Movie movie) {
+		broadcast.setRoom(room);
+		broadcast.setMovie(movie);
+		return broadcastRepository.save(broadcast);
+	}
+
+	public Broadcast getBroadcast(Integer id) {
+		Optional<Broadcast> broadcastOptional = broadcastRepository.findById(id);
+		if (broadcastOptional.isPresent()) {
+			return broadcastOptional.get();
+		} else {
+			throw new BroadcastNotFoundException(id);
+		}
+	}
+
+	public void deleteBroadcast(Integer id) {
+		Optional<Broadcast> broadcastOptional = broadcastRepository.findById(id);
+		if (broadcastOptional.isPresent()) {
+			broadcastRepository.delete(broadcastOptional.get());
+		} else {
+			throw new BroadcastNotFoundException(id);
+		}
+	}
+
+}
+```
 ## Repositories
+- Fiecare entitate are asociata cate o interfata care extinde *JpaRepository<Entitate, Tip_ID>* unde au fost definite metodele care nu se aflau in interfata de baza (cele existente deja: findById, findAllById, delete, save etc...) 
+```Java
+public interface UserRepository extends JpaRepository<User, Integer> {
+
+	@Query(value = "select * from user where first_name = :name", nativeQuery = true)
+	User findUserByFirstNameWithNativeQuery(String name);
+
+	Optional<User> findByEmail(String email);
+
+}
+```
 
 ## Model mapper 
 - Clasele de tip *@Component* cu scopul maparii entitatilor de tip request in entitati folosite ca model in baza de date au fost create pentru fiecare entitate in parte, continand un singur constructor cu parametrii

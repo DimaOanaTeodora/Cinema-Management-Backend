@@ -48,7 +48,7 @@ public class BroadcastService {
 		if (broadcastOptional.isPresent()) {
 			broadcastRepository.delete(broadcastOptional.get());
 		} else {
-			throw new UserNotFoundException(id);
+			throw new BroadcastNotFoundException(id);
 		}
 	}
 

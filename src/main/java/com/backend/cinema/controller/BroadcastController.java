@@ -58,7 +58,7 @@ public class BroadcastController {
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<Broadcast> create(@PathVariable Integer roomId, @PathVariable Integer movieId,
 			@Valid @RequestBody @ApiParam(name = "broadcast", value = "Broadcast details", required = true) BroadcastRequest broadcastRequest) {
-		Room room = roomService.getRoom(roomId).get();
+		Room room = roomService.getRoom(roomId);
 		Movie movie = movieService.getMovie(movieId);
 		Broadcast savedBroadcast = broadcastService
 				.createBroadcast(broadcastMapper.broadcastRequestToBroadcast(broadcastRequest), room, movie);
@@ -72,7 +72,7 @@ public class BroadcastController {
 			@ApiResponse(code = 201, message = "The broadcast was successfully updated based on the received request") })
 	public ResponseEntity<Broadcast> create(@PathVariable Integer broadcastId, @PathVariable Integer newRoomId) {
 
-		Room newRoom = roomService.getRoom(newRoomId).get();
+		Room newRoom = roomService.getRoom(newRoomId);
 		Broadcast savedBroadcast = broadcastService.updateBroadcastRoom(broadcastService.getBroadcast(broadcastId),
 				newRoom);
 		return ResponseEntity.created(URI.create("/schedules/" + savedBroadcast.getId())).body(savedBroadcast);

@@ -73,11 +73,10 @@ public class RoomServiceTest {
 		when(roomRepository.findById(1)).thenReturn(Optional.of(room));
 
 		// Act
-		Optional<Room> result = roomService.getRoom(1);
+		Room result = roomService.getRoom(1);
 
 		// Assert
 		assertNotNull(result);
-		assertTrue(result.isPresent());
-		assertEquals(room.getId(), result.get().getId());
+		assertEquals(room.getId(), result.getId());
 	}
 }

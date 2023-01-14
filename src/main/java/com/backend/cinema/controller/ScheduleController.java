@@ -1,7 +1,5 @@
 package com.backend.cinema.controller;
 
-import java.net.URI;
-
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
@@ -47,12 +45,12 @@ public class ScheduleController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "The schedule was successfully updated based on the received request"),
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
-	public ResponseEntity<Schedule> create(@PathVariable Integer broadcastId,
+	public ResponseEntity<Schedule> updateSchedule(@PathVariable Integer broadcastId,
 			@Valid @RequestBody @ApiParam(name = "schedule", value = "Schedule details", required = true) ScheduleRequest scheduleRequest) {
 		Broadcast broadcast = broadcastService.getBroadcast(broadcastId);
 		Schedule savedSchedule = scheduleService.updateSchedule(broadcast.getSchedule(),
 				scheduleMapper.scheduleRequestToSchedule(scheduleRequest));
-		return ResponseEntity.created(URI.create("/schedules/" + savedSchedule.getId())).body(savedSchedule);
+		return ResponseEntity.ok().body(savedSchedule);
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.backend.cinema.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +27,10 @@ public class RoomService {
 		return roomRepository.save(room);
 	}
 
-	public Optional<Room> getRoom(Integer id) {
+	public Room getRoom(Integer id) {
 		Optional<Room> roomOptional = roomRepository.findById(id);
 		if (roomOptional.isPresent()) {
-			return roomOptional;
+			return roomOptional.get();
 		} else {
 			throw new RoomNotFoundException(id);
 		}
