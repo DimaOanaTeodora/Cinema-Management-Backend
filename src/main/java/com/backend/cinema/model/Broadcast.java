@@ -12,15 +12,11 @@ public class Broadcast {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne // (cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id", nullable = false)
 	private Room room;
 
-	@OneToOne(mappedBy = "broadcast")
-	@JsonIgnore
-	private Reservation reservation;
-
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne // (cascade = CascadeType.ALL)
 	@JoinColumn(name = "movie_id", referencedColumnName = "id")
 	private Movie movie;
 
@@ -49,14 +45,6 @@ public class Broadcast {
 
 	public void setRoom(Room room) {
 		this.room = room;
-	}
-
-	public Reservation getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
 	}
 
 	public Movie getMovie() {

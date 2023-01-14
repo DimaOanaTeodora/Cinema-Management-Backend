@@ -1,5 +1,6 @@
 package com.backend.cinema.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -28,5 +29,9 @@ public class MovieService {
 		} else {
 			throw new MovieNotFoundException(id);
 		}
+	}
+
+	public List<Movie> getAllMovies() {
+		return movieRepository.findAll();
 	}
 }

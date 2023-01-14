@@ -1,6 +1,7 @@
 package com.backend.cinema.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,9 +21,11 @@ import com.backend.cinema.mapper.BroadcastMapper;
 
 import com.backend.cinema.model.Broadcast;
 import com.backend.cinema.model.Movie;
+import com.backend.cinema.model.Reservation;
 import com.backend.cinema.model.Room;
 import com.backend.cinema.service.BroadcastService;
 import com.backend.cinema.service.MovieService;
+import com.backend.cinema.service.ReservationService;
 import com.backend.cinema.service.RoomService;
 
 import io.swagger.annotations.Api;
@@ -39,14 +42,16 @@ public class BroadcastController {
 	private BroadcastService broadcastService;
 	private RoomService roomService;
 	private MovieService movieService;
+	private ReservationService reservationService;
 
 	private BroadcastMapper broadcastMapper;
 
-	public BroadcastController(BroadcastService broadcastService, RoomService roomService, MovieService movieService,
+	public BroadcastController(BroadcastService broadcastService, RoomService roomService, MovieService movieService,ReservationService reservationService,
 			BroadcastMapper broadcastMapper) {
 		this.broadcastService = broadcastService;
 		this.roomService = roomService;
 		this.movieService = movieService;
+		this.reservationService = reservationService;
 		this.broadcastMapper = broadcastMapper;
 	}
 
@@ -86,13 +91,16 @@ public class BroadcastController {
 		return ResponseEntity.ok().body(broadcastService.getBroadcast(id));
 	}
 
-	@DeleteMapping(path = "/{movieId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping(path = "/{broadcastId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Delete a broadcast", notes = "Delete a broadcast by movie id from the database and it's dependencies")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "The broadcast was found"),
 			@ApiResponse(code = 404, message = "The broadcast was not found") })
-	public ResponseEntity<String> delete(@PathVariable Integer movieId) {
-		Movie movie = movieService.getMovie(movieId);
-		broadcastService.deleteBroadcast(movie.getId());
+	public ResponseEntity<String> delete(@PathVariable Integer broadcastId) {
+		List<Reservation> reservations = reservationService.getAllReservationsByBroadcast(broadcastId);
+		for(Reservation reservation : reservations) {
+			reservationService.deleteReservation(reservation.getId());
+		}
+		broadcastService.deleteBroadcast(broadcastId);
 		return ResponseEntity.ok().body("Succesfully deleted");
 	}
 

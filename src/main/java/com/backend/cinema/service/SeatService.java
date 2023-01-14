@@ -5,7 +5,6 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,7 @@ import com.backend.cinema.repository.SeatRepository;
 
 @Service
 public class SeatService {
+	
 	private SeatRepository seatRepository;
 
 	public SeatService(SeatRepository seatRepository) {
@@ -39,17 +39,20 @@ public class SeatService {
 		return seatRepository.save(seat);
 	}
 
-	public Dictionary<Room, List<Seat>> getFreeSeats(List<Reservation> reservations) {
+	public Dictionary<Room, List<Seat>> getFreeSeats(List<Reservation> reservations, Broadcast broadcast) {
 		Dictionary<Room, List<Seat>> dictionary = new Hashtable<Room, List<Seat>>();
+		List<Seat> allSeats = seatRepository.findAll();
+		List<Seat> reservedSeats = new ArrayList<Seat>();
 		for (Reservation reservation : reservations) {
-			List<Seat> reservedSeats = reservation.getReservedSeats();
-			for (Seat seat : reservedSeats) {
+			reservedSeats.addAll(reservation.getReservedSeats());
+		}
+		for (Seat seat : allSeats) {
+			if (seat.getRoom().getId() == broadcast.getRoom().getId() && !reservedSeats.contains(seat)) {
 				List<Seat> l = dictionary.get(seat.getRoom());
 				if (l == null) {
 					l = new ArrayList<Seat>();
 				}
 				l.add(seat);
-
 				dictionary.put(seat.getRoom(), l);
 			}
 		}

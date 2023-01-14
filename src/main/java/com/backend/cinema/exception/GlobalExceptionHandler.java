@@ -40,6 +40,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<String> handle(ScheduleNotFoundException e) {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage() + " at " + LocalDateTime.now());
 	}
+	
+	@ExceptionHandler({ ReservationNotFoundException.class })
+	public ResponseEntity<String> handle(ReservationNotFoundException e) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage() + " at " + LocalDateTime.now());
+	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<String> handle(MethodArgumentNotValidException e) {

@@ -64,14 +64,12 @@ public class RoomController {
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<List<Room>> createBulk(
 			@Valid @RequestBody @ApiParam(name = "rooms", value = "List with rooms details", required = true) List<RoomRequest> listRoomRequest) {
-		List<Room> createdRooms = new ArrayList<Room>();
 		for (RoomRequest roomRequest : listRoomRequest) {
 			Room savedRoom = roomService.createRoom(roomMapper.roomRequestToRoom(roomRequest)); // create room
 			List<Seat> seats = seatService.createSeats(savedRoom); // create seats
 			savedRoom = roomService.saveSeats(seats, savedRoom);
-			createdRooms.add(savedRoom);
 		}
-		return ResponseEntity.ok().body(createdRooms);
+		return ResponseEntity.ok().body(roomService.getAllRooms());
 	}
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

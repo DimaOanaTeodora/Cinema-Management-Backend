@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.backend.cinema.exception.RoomNotFoundException;
+import com.backend.cinema.model.Movie;
 import com.backend.cinema.model.Room;
 import com.backend.cinema.model.Seat;
 import com.backend.cinema.repository.RoomRepository;
@@ -34,5 +35,9 @@ public class RoomService {
 		} else {
 			throw new RoomNotFoundException(id);
 		}
+	}
+	
+	public List<Room> getAllRooms() {
+		return roomRepository.findAll();
 	}
 }

@@ -58,12 +58,10 @@ public class MovieController {
 			@ApiResponse(code = 400, message = "Validation error on the received request") })
 	public ResponseEntity<List<Movie>> createBulk(
 			@Valid @RequestBody @ApiParam(name = "movies", value = "List with movies details", required = true) List<MovieRequest> listMovieRequest) {
-		List<Movie> createdMovies = new ArrayList<Movie>();
 		for (MovieRequest movieRequest : listMovieRequest) {
 			Movie savedMovie = movieService.createMovie(movieMapper.movieRequestToMovie(movieRequest));
-			createdMovies.add(savedMovie);
 		}
-		return ResponseEntity.ok().body(createdMovies);
+		return ResponseEntity.ok().body(movieService.getAllMovies());
 	}
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })

@@ -4,15 +4,12 @@ Documentatie
 ## :clipboard: MySQL database - Baza de date - entitati
 ![DB schema](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/DB.png?raw=true)
 
-## :briefcase: Business requirmentes/ Functionalitati
-TODO la stergerea unei programari sa nu stearga camere si filmele 
-
 ## :briefcase: REST ENDPOINTS - CRUD - Functionalitati
 ### CREATE
 1. Adaugare film
 2. Adaugare filme printr-un JSON cu o lista de filme
 3. Adaugare sala + generare automata locuri din sala in ordine crescatoare incepand cu 1
-4. Adaugare sali + generare automata locuri pentru ficare printr-un JSON cu o lista de sali
+4. Adaugare sali printr-un JSON cu o lista de sali + enerare automata locuri din sala in ordine crescatoare incepand cu 1
 5. Adaugare user + duplicate exception pentru email
 6. Adaugarea unei rezervari facuta de un user, pentru un anumit film, la o anumita data si ora, cu un numar de locuri dat
 7. Adaugare programare film intr-o anumita sala, la o anumita data si ora
@@ -32,7 +29,7 @@ TODO la stergerea unei programari sa nu stearga camere si filmele
 3. Stergerea unei programari a unui film
    
 ## :next_track_button: Testing
-Code coverage total obtinut 70.6%
+Code coverage total obtinut 69.7%
 
 ![Tests](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/test.png?raw=true)
 
@@ -254,7 +251,10 @@ public class RoomRequest {
     }
 ```
 
-## :high_brightness: SWARM DOCS
+## :high_brightness: SWAGGER DOCS
+
+![Swagger](https://github.com/DimaOanaTeodora/Cinema-Management-Backend/blob/main/swagger.png?raw=true)
+
 ```Java
 \\SwaggerConfig.java
 
